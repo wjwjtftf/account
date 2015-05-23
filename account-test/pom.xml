@@ -4,6 +4,7 @@
     <groupId>com.juvenxu.mvnbook.account</groupId>
     <artifactId>account-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../account-parent/pom.xml</relativePath>
   </parent>
   <artifactId>account-test</artifactId>
   <name>Account Test</name>
