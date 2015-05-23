@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion><!-- 当前POM模型的版本 -->
+	<groupId>com.juvenxu.mvnbook.account</groupId><!-- 定义项目所在组，公司类型+公司组织+实际项目[通常是域名的反写] -->
+	<artifactId>account-parent</artifactId><!-- 定义当前项目在实际项目中的模块，实际项目+模块[中间‘-’连接] -->
+	<version>1.0.0-SNAPSHOT</version><!-- 当前项目的当前版本,SNAPSHOT表示不稳定版本 -->
+	
+	<packaging>pom</packaging><!-- 作为父模块或者聚合模块的POM,其打包类型也必须为POM,因为本身不包含除了POM文件之外的项目文件 -->
+	<name>Account Parent</name><!-- 为每个POM声明一个对于用户更为友好的名称，非必须 -->
+	<description>这里是项目描述</description>
+	
+	<properties>
+		<springframework.version>2.5.6</springframework.version>
+		<junit.version>4.7</junit.version>
+	</properties>
+
+	<!-- 约束子模块dependencies下元素的引用,不过不会给自身或子模块引入依赖 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.7</version>
+				<scope>test</scope><!-- 依赖范围,默认compile说明该依赖对主代码和测试代码都生效 -->
+			</dependency>
+			<!-- 在dependencyManagement下，scope可以选择import，import范围依赖由于
+			其特殊性，一般都是指向打包类型为POM的模块 -->
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<!-- 插件配置元素pluginManagement,不会影响实际的行为,可以统一项目插件版本,更易于维护 -->
+		<pluginManagement>
+			<plugins>
+				<!-- 自定义绑定插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.1.1</version>
+					<executions>
+						<!-- 配置插件下的任务,将目标绑定到阶段上,一个阶段可以绑定多个目标 -->
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- 定义编译器版本 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+				<!-- 使用UTF-8编码处理资源文件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<!-- 配置部署仓库 -->
+	<distributionManagement>
+		<repository>
+			<id>my-releases-nexus</id>
+			<name>Project Release Repository</name>
+			<url>http://localhost:8081/nexus/content/repositories/account-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>my-snaphosts-nexus</id>
+			<name>Project Snaphost Repository</name>
+			<url>http://localhost:8081/nexus/content/repositories/account-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<!-- 开发年份 -->
+	<inceptionYear>2014</inceptionYear>
+	<!-- 开发者信息 -->
+	<developers>
+		<developer>
+			<id>wjwjtftf</id>
+			<name>tangfan</name>
+			<organization>org</organization>
+			<roles>
+				<role>programmer</role>
+				<role>man</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<modules>
+		<module>../account-captcha</module>
+		<module>../account-email</module>
+		<module>../account-persist</module>
+		<module>../account-service</module>
+	</modules>
+</project>

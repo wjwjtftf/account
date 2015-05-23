@@ -1,0 +1,67 @@
+/*******************************************************************
+ * Copyright (c) 2007 arvato and others
+ * All rights reserved.
+ *
+ * Contributors:
+ * arvato Systems (Shanghai) Co., Ltd.
+ * 
+ ******************************************************************/
+package com.juvenxu.mvnbook.account.persist;
+
+/**
+ * 账户实体类
+ *
+ * @author fan.tang
+ *
+ * @version 2014年11月11日
+ *
+ */
+public class Account {
+
+	private String id;
+	private String name;
+	private String email;
+	private String password;
+	private boolean activated;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
+	}
+
+}
