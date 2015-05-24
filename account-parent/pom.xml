@@ -1,17 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion><!-- 当前POM模型的版本 -->
 	<groupId>com.juvenxu.mvnbook.account</groupId><!-- 定义项目所在组，公司类型+公司组织+实际项目[通常是域名的反写] -->
 	<artifactId>account-parent</artifactId><!-- 定义当前项目在实际项目中的模块，实际项目+模块[中间‘-’连接] -->
 	<version>1.0.0-SNAPSHOT</version><!-- 当前项目的当前版本,SNAPSHOT表示不稳定版本 -->
-	
+
 	<packaging>pom</packaging><!-- 作为父模块或者聚合模块的POM,其打包类型也必须为POM,因为本身不包含除了POM文件之外的项目文件 -->
 	<name>Account Parent</name><!-- 为每个POM声明一个对于用户更为友好的名称，非必须 -->
 	<description>这里是项目描述</description>
-	
+
 	<properties>
-		<springframework.version>2.5.6</springframework.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<springframework.version>4.1.2.RELEASE</springframework.version>
 		<junit.version>4.7</junit.version>
 	</properties>
 
@@ -49,11 +50,25 @@
 				<version>4.7</version>
 				<scope>test</scope><!-- 依赖范围,默认compile说明该依赖对主代码和测试代码都生效 -->
 			</dependency>
-			<!-- 在dependencyManagement下，scope可以选择import，import范围依赖由于
-			其特殊性，一般都是指向打包类型为POM的模块 -->
+			<!-- 在dependencyManagement下，scope可以选择import，import范围依赖由于 其特殊性，一般都是指向打包类型为POM的模块 -->
 		</dependencies>
 	</dependencyManagement>
-	
+
+	<!-- 所有子类的引用 -->
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.checkerframework</groupId>
+			<artifactId>checker-qual</artifactId>
+			<version>1.9.1</version>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<!-- 插件配置元素pluginManagement,不会影响实际的行为,可以统一项目插件版本,更易于维护 -->
 		<pluginManagement>
@@ -78,10 +93,13 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
+					<!-- <version>2.5.1</version> -->
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
+						<fork>true</fork>
+						<executable>(absolute path to checker framework
+							installation)/checker/bin/javac_maven</executable>
 					</configuration>
 				</plugin>
 				<!-- 使用UTF-8编码处理资源文件 -->
@@ -96,7 +114,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
+
 	<!-- 配置部署仓库 -->
 	<distributionManagement>
 		<repository>
@@ -110,7 +128,7 @@
 			<url>http://localhost:8081/nexus/content/repositories/account-snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
 	<!-- 开发年份 -->
 	<inceptionYear>2014</inceptionYear>
 	<!-- 开发者信息 -->
@@ -125,7 +143,7 @@
 			</roles>
 		</developer>
 	</developers>
-	
+
 	<modules>
 		<module>../account-captcha</module>
 		<module>../account-email</module>
